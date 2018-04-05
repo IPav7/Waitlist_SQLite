@@ -1,27 +1,30 @@
 package com.example.android.waitlist;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.android.waitlist.data.WaitlistContract;
+
 
 public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.GuestViewHolder> {
 
     private Context mContext;
 
-    private int mCount;
+    private Cursor mCursor;
 
     /**
      * Constructor using the context and the db cursor
      *
      * @param context the calling context/activity
      */
-    public GuestListAdapter(Context context, int count) {
+    public GuestListAdapter(Context context, Cursor cursor) {
         this.mContext = context;
-        mCount = count;
+        mCursor = cursor;
     }
 
     @Override
@@ -33,13 +36,20 @@ public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.Gues
 
     @Override
     public void onBindViewHolder(GuestViewHolder holder, int position) {
+        if(!mCursor.moveToPosition(position))
+            return;
+        String name = mCursor.getString(mCursor.getColumnIndex(WaitlistContract.WaitlistEntry.COLUMN_GUEST_NAME));
+        int party_size = mCursor.getInt(mCursor.getColumnIndex(WaitlistContract.WaitlistEntry.COLUMN_PARTY_SIZE));
+
+        holder.nameTextView.setText(name);
+        holder.partySizeTextView.setText(String.valueOf(party_size));
 
     }
 
 
     @Override
     public int getItemCount() {
-        return mCount;
+        return mCursor.getCount();
     }
 
 
