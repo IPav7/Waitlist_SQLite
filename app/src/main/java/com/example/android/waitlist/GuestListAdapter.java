@@ -27,6 +27,12 @@ public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.Gues
         mCursor = cursor;
     }
 
+    public void swapCursor(Cursor cursor){
+        if(mCursor != null) mCursor.close();
+        mCursor = cursor;
+        if(cursor!=null) this.notifyDataSetChanged();
+    }
+
     @Override
     public GuestViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
