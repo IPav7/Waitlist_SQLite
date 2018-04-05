@@ -12,18 +12,20 @@ public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.Gues
 
     private Context mContext;
 
+    private int mCount;
+
     /**
      * Constructor using the context and the db cursor
      *
      * @param context the calling context/activity
      */
-    public GuestListAdapter(Context context) {
+    public GuestListAdapter(Context context, int count) {
         this.mContext = context;
+        mCount = count;
     }
 
     @Override
     public GuestViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // Get the RecyclerView item layout
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.guest_list_item, parent, false);
         return new GuestViewHolder(view);
@@ -37,7 +39,7 @@ public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.Gues
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mCount;
     }
 
 
@@ -60,8 +62,8 @@ public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.Gues
          */
         public GuestViewHolder(View itemView) {
             super(itemView);
-            nameTextView = (TextView) itemView.findViewById(R.id.name_text_view);
-            partySizeTextView = (TextView) itemView.findViewById(R.id.party_size_text_view);
+            nameTextView = itemView.findViewById(R.id.name_text_view);
+            partySizeTextView = itemView.findViewById(R.id.party_size_text_view);
         }
 
     }
